@@ -1,0 +1,37 @@
+name: 'Synky plan grant'
+description: 'Starts a Synky deploy run and returns the read-only role to plan with'
+author: 'Synky'
+branding:
+  icon: 'shield'
+  color: 'blue'
+
+inputs:
+  api-url:
+    description: 'Synky API base URL, e.g. https://api.synky.dev'
+    required: true
+  deploy-path:
+    description: 'Path to the Terraform root module inside this repository'
+    required: false
+    default: '.'
+  oidc-audience:
+    description: 'Audience for the GitHub OIDC token. Must match the Synky broker.'
+    required: false
+    default: 'synky'
+
+outputs:
+  grant-id:
+    description: 'Synky run grant id, passed to synky/apply-grant'
+  role-arn:
+    description: 'AWS role to assume for terraform init and plan'
+  account-id:
+    description: 'AWS account the deploy targets'
+  expires-at:
+    description: 'Hard expiry of this run grant (ISO 8601)'
+  status:
+    description: 'Grant status after starting the run'
+
+runs:
+  using: 'node20'
+  main: 'dist/main.js'
+  post: 'dist/post.js'
+  post-if: 'always()'
