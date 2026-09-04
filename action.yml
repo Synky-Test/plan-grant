@@ -1,5 +1,5 @@
 name: 'Synky plan grant'
-description: 'Starts a Synky deploy run and returns the read-only role to plan with'
+description: 'Starts a Synky deploy run and leases a JIT role for plan and apply'
 author: 'Synky'
 branding:
   icon: 'shield'
@@ -22,7 +22,7 @@ outputs:
   grant-id:
     description: 'Synky run grant id, passed to synky/apply-grant'
   role-arn:
-    description: 'AWS role to assume for terraform init and plan'
+    description: 'JIT run role ARN to assume for terraform plan and apply'
   account-id:
     description: 'AWS account the deploy targets'
   expires-at:

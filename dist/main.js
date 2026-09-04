@@ -21850,7 +21850,7 @@ async function run() {
   core3.setOutput("expires-at", grant.expiresAt);
   core3.setOutput("status", grant.status);
   core3.info(
-    `Synky run ${grant.grantId} started for ${grant.repository} at '${grant.deployPath}'. Plan with ${grant.roleArn} (read-only until apply-grant).`
+    `Synky run ${grant.grantId} started for ${grant.repository} at '${grant.deployPath}'. Assume ${grant.roleArn} for terraform plan; apply-grant adds mutate permissions to the same role.`
   );
 }
 run().catch((error) => {
