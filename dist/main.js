@@ -21838,6 +21838,14 @@ function brokerOptions() {
   return { apiUrl, audience };
 }
 
+// src/userFacingError.ts
+function brokerFailureMessage(error, verb) {
+  if (error.status >= 500 || error.status === 0) {
+    return `Synky could not ${verb} due to a server error. Try again or contact Synky support.`;
+  }
+  return `Synky could not ${verb} (${error.status}): ${error.message}`;
+}
+
 // src/plan-grant/main.ts
 async function run() {
   const options = brokerOptions();
@@ -21855,7 +21863,7 @@ async function run() {
 }
 run().catch((error) => {
   if (error instanceof BrokerError) {
-    core3.setFailed(`Synky could not start this run (${error.status}): ${error.message}`);
+    core3.setFailed(brokerFailureMessage(error, "start this run"));
     return;
   }
   core3.setFailed(error instanceof Error ? error.message : String(error));
